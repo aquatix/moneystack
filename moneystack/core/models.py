@@ -17,7 +17,7 @@ class BaseModel(models.Model):
 
 class Project(BaseModel):
     """
-    Account
+    Account that can be shared by multiple users. Can contain multiple banking accounts.
     """
     title = models.CharField(max_length=255, blank=False)
     #users
@@ -27,14 +27,14 @@ class Account(BaseModel):
     """
     Banking account
     """
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, related_name='account')
     title = models.CharField(max_length=255, blank=False)
     accountcode = models.TextField(max_length=40, blank=False, help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
 
     @property
     def total(self):
         amount = 0
-        for transaction in self.transactions:
+        for transaction in self.transactions.all():
             amount = amount + transaction.real_amount
         return amount
 
@@ -47,10 +47,10 @@ class Transaction(BaseModel):
     description = models.TextField()
     account = models.ForeignKey(Account, related_name='transactions')
     otheraccount = models.CharField(max_length=40, blank=True)
-    code = models.CharField(max_lengt=255, blank=True)
+    code = models.CharField(max_length=255, blank=True)
     # withdrawal or deposit, True or False
     withdrawal = models.BooleanField(default=True)
-    amount = models.DecimalField()
+    amount = models.DecimalField(decimal_places=2, max_digits=10)
     mutation_kind = models.CharField(max_length=255, blank=True)
     notes = models.TextField(blank=True)
 
