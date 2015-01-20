@@ -60,3 +60,13 @@ class Transaction(BaseModel):
             return -1 * amount
         else:
             return amount
+
+
+class PaymentParty(BaseModel):
+    """
+    A vendor, person or whatever (think supermarket, pizzeria, bank
+    """
+    title = models.CharField(max_length=255)
+    #hash?
+    #lebenstein distance thingee?
+    #regexp?
