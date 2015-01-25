@@ -1,3 +1,6 @@
+"""
+Models of moneystack project
+"""
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
@@ -14,6 +17,9 @@ class BaseModel(models.Model):
         abstract = True
         ordering = ('-date_created', )
 
+    def __unicode__(self):
+        return 'BaseModel created at {0}'.format(self.date_created)
+
 
 class Project(BaseModel):
     """
@@ -29,7 +35,8 @@ class Account(BaseModel):
     """
     project = models.ForeignKey(Project, related_name='account')
     title = models.CharField(max_length=255, blank=False)
-    accountcode = models.TextField(max_length=40, blank=False, help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
+    accountcode = models.TextField(max_length=40, blank=False,\
+            help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
 
     @property
     def total(self):
