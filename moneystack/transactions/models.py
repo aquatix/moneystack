@@ -1,9 +1,10 @@
 """
 Models of moneystack project
 """
-from django.db import models
 from datetime import datetime
+
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class BaseModel(models.Model):
@@ -33,7 +34,7 @@ class Account(BaseModel):
     """
     Banking account
     """
-    project = models.ForeignKey(Project, related_name='account')
+    project = models.ForeignKey(Project, related_name='account', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=False)
     accountcode = models.TextField(max_length=40, blank=False,\
             help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
@@ -52,7 +53,7 @@ class Transaction(BaseModel):
     """
     date = models.DateTimeField()
     description = models.TextField()
-    account = models.ForeignKey(Account, related_name='transactions')
+    account = models.ForeignKey(Account, related_name='transactions', on_delete=models.CASCADE)
     otheraccount = models.CharField(max_length=40, blank=True)
     code = models.CharField(max_length=255, blank=True)
     # withdrawal or deposit, True or False
