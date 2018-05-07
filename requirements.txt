@@ -4,5 +4,5 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-django==2.0.4
+django==2.0.5
 pytz==2018.4              # via django
