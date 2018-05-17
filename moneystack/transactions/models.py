@@ -22,6 +22,11 @@ class BaseModel(models.Model):
         return 'BaseModel created at {0}'.format(self.date_created)
 
 
+class MutationsUpload(BaseModel):
+    description = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to='uploads/')
+
+
 class Project(BaseModel):
     """
     Account that can be shared by multiple users. Can contain multiple banking accounts.
