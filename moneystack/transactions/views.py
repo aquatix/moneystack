@@ -1,29 +1,20 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from .forms import UploadFileForm
+from django.shortcuts import render, redirect
+from .forms import MutationsUploadForm
 
-# Imaginary function to handle an uploaded file.
-#from somewhere import handle_uploaded_file
 
-def upload_file(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            #handle_uploaded_file(request.FILES['file'])
-            return HttpResponseRedirect('/success/url/')
-    else:
-        form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
+def index(request):
+    return ''
 
 
 def model_form_upload(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        form = MutationsUploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('index')
     else:
-        form = UploadFileForm()
+        form = MutationsUploadForm()
     return render(request, 'upload.html', {
         'form': form
     })
