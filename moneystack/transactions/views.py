@@ -4,7 +4,7 @@ from .forms import MutationsUploadForm
 
 
 def index(request):
-    return ''
+    return render(request, 'overview.html')
 
 
 def model_form_upload(request):
