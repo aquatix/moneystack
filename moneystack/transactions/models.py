@@ -1,6 +1,4 @@
-"""
-Models of moneystack project
-"""
+"""Models of moneystack project"""
 from datetime import datetime
 
 from django.contrib.auth.models import User
@@ -23,22 +21,19 @@ class BaseModel(models.Model):
 
 
 class MutationsUpload(BaseModel):
+    """Uploaded transactions/mutations file (csv)"""
     description = models.CharField(max_length=255, blank=True)
     document = models.FileField(upload_to='uploads/')
 
 
 class Project(BaseModel):
-    """
-    Account that can be shared by multiple users. Can contain multiple banking accounts.
-    """
+    """Account that can be shared by multiple users. Can contain multiple banking accounts."""
     title = models.CharField(max_length=255, blank=False)
     #users
 
 
 class Account(BaseModel):
-    """
-    Banking account
-    """
+    """Banking account"""
     project = models.ForeignKey(Project, related_name='account', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=False)
     accountcode = models.TextField(max_length=40, blank=False,\
@@ -53,9 +48,7 @@ class Account(BaseModel):
 
 
 class Transaction(BaseModel):
-    """
-    A single transaction in an account
-    """
+    """A single transaction in an account"""
     date = models.DateTimeField()
     description = models.TextField()
     account = models.ForeignKey(Account, related_name='transactions', on_delete=models.CASCADE)
@@ -76,9 +69,7 @@ class Transaction(BaseModel):
 
 
 class PaymentParty(BaseModel):
-    """
-    A vendor, person or whatever (think supermarket, pizzeria, bank
-    """
+    """A vendor, person or whatever (think supermarket, pizzeria, bank)"""
     title = models.CharField(max_length=255)
     #hash?
     #lebenstein distance thingee?
