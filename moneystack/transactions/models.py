@@ -60,6 +60,9 @@ class Transaction(BaseModel):
     mutation_kind = models.CharField(max_length=255, blank=True)
     notes = models.TextField(blank=True)
 
+    # 'betalingskenmerk', parsed from notes. Minimum of 7 digits, max of 16
+    payment_referencea = models.TextField(max_length=20, blank=True)
+
     @property
     def real_amount(self):
         if self.withdrawal:
