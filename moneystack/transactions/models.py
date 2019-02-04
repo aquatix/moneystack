@@ -29,7 +29,7 @@ class MutationsUpload(BaseModel):
 class Project(BaseModel):
     """Account that can be shared by multiple users. Can contain multiple banking accounts."""
     title = models.CharField(max_length=255, blank=False)
-    #users
+    users = models.ManyToManyField(User)
 
 
 class Account(BaseModel):
