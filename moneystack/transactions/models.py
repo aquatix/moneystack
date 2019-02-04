@@ -62,10 +62,9 @@ class Transaction(BaseModel):
 
     @property
     def real_amount(self):
-        if withdrawal:
-            return -1 * amount
-        else:
-            return amount
+        if self.withdrawal:
+            return -1 * self.amount
+        return self.amount
 
 
 class PaymentParty(BaseModel):
