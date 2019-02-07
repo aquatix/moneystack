@@ -24,7 +24,7 @@ class TransactionAdmin(admin.ModelAdmin):
     """
     Edit transactions
     """
-    list_display = ('date', 'account', 'otheraccount', 'code', 'amount',)
+    list_display = ('date', 'account', 'otheraccount', 'code', 'amount', 'payment_reference',)
 
 
 admin.site.register(Project, ProjectAdmin)
