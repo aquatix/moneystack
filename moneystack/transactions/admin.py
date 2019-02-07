@@ -3,7 +3,7 @@ Django admin stuff for moneystack
 """
 from django.contrib import admin
 
-from .models import Account, Project
+from .models import Account, Project, Transaction
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -20,5 +20,13 @@ class AccountAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
 
+class TransactionAdmin(admin.ModelAdmin):
+    """
+    Edit transactions
+    """
+    list_display = ('date', 'account', 'otheraccount', 'code', 'amount',)
+
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Account, AccountAdmin)
+admin.site.register(Transaction, TransactionAdmin)
