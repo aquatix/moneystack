@@ -31,6 +31,12 @@ class Project(BaseModel):
     title = models.CharField(max_length=255, blank=False)
     users = models.ManyToManyField(User)
 
+    def __repr__(self):
+        return f'Project({self.title})'
+
+    def __str__(self):
+        return f'{self.title}'
+
 
 class Account(BaseModel):
     """Banking account"""
@@ -38,6 +44,12 @@ class Account(BaseModel):
     title = models.CharField(max_length=255, blank=False)
     accountcode = models.TextField(max_length=40, blank=False,\
             help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
+
+    def __repr__(self):
+        return f'Account({self.id!r} {self.title!r})'
+
+    def __str__(self):
+        return f'{self.title} ({self.project})'
 
     @property
     def total(self):
@@ -62,6 +74,12 @@ class Transaction(BaseModel):
 
     # 'betalingskenmerk', parsed from notes. Minimum of 7 digits, max of 16
     payment_reference = models.TextField(max_length=20, blank=True)
+
+    def __repr__(self):
+        return f'Transaction({self.pk!r}, {self.account!r}, {self.amount!r}, {self.description!r})'
+
+    def __str__(self):
+        return f'{self.account}, {self.amount}, {self.description}'
 
     @property
     def real_amount(self):
