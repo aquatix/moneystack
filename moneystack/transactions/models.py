@@ -20,12 +20,6 @@ class BaseModel(models.Model):
         return 'BaseModel created at {0}'.format(self.date_created)
 
 
-class MutationsUpload(BaseModel):
-    """Uploaded transactions/mutations file (csv)"""
-    description = models.CharField(max_length=255, blank=True)
-    document = models.FileField(upload_to='uploads/')
-
-
 class Project(BaseModel):
     """Account that can be shared by multiple users. Can contain multiple banking accounts."""
     title = models.CharField(max_length=255, blank=False)
@@ -59,6 +53,19 @@ class Account(BaseModel):
         return amount
 
 
+class MutationsUpload(BaseModel):
+    """Uploaded transactions/mutations file (csv)"""
+    account = models.ForeignKey(Account, related_name='mutationsupload', on_delete=models.CASCADE)
+    description = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to='uploads/')
+
+    def __repr__(self):
+        return f'MutationsUpload({self.id} {self.document.name}'
+
+    def __str__(self):
+        return f'{self.document.name}'
+
+
 class Transaction(BaseModel):
     """A single transaction in an account"""
     date = models.DateTimeField()
@@ -83,6 +90,11 @@ class Transaction(BaseModel):
 
     @property
     def real_amount(self):
+        """Ensures the amount of money is always positive, as a withdrawal itself also is a positive number
+
+        :return: positive amount of money
+        :rtype: float
+        """
         if self.withdrawal:
             return -1 * self.amount
         return self.amount
