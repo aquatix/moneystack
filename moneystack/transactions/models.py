@@ -1,14 +1,25 @@
 """Models of moneystack project"""
+import binascii
+import os
 from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
 
+from .choices import *
+
+
+def generate_key():
+    """Generate a random string, to be used as key
+
+    :return: string with hexadecimal representation of a 24-bit random string
+    :rtype: str
+    """
+    return binascii.hexlify(os.urandom(24))
+
 
 class BaseModel(models.Model):
-    """
-    Base model with common properties.
-    """
+    """Base model with common properties."""
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
 
@@ -24,6 +35,7 @@ class MutationsUpload(BaseModel):
     """Uploaded transactions/mutations file (csv)"""
     description = models.CharField(max_length=255, blank=True)
     document = models.FileField(upload_to='uploads/')
+    file_type = models.IntegerField(choices=MUTATION_FILE_TYPES, default=1)
 
 
 class Project(BaseModel):
@@ -42,8 +54,15 @@ class Account(BaseModel):
     """Banking account"""
     project = models.ForeignKey(Project, related_name='account', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=False)
-    accountcode = models.TextField(max_length=40, blank=False,\
+    accountcode = models.CharField(max_length=40, blank=False,\
             help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
+
+    secure_code = models.CharField(max_length=100, blank=False)  # Used for storing (temporary) files and such
+
+    def __init__(self):
+        super().__init__()
+        # Get a random key
+        self.secure_code = generate_key()
 
     def __repr__(self):
         return f'Account({self.id!r} {self.title!r})'
@@ -94,3 +113,13 @@ class PaymentParty(BaseModel):
     #hash?
     #lebenstein distance thingee?
     #regexp?
+    category = models.IntegerField(choices=PAYMENTPARTY_CATEGORIES, default=PAYMENTPARTY_CATEGORIES[0])
+    #tags = 
+
+
+class PaymentPartyInstance(BaseModel):
+    """An instance of a PaymentParty, like a specific subsidiary ('filiaal' or something)"""
+    paymentparty = models.ForeignKey(PaymentParty, related_name='instances', on_delete=models.CASCADE)
+
+    # IBAN account number
+    account = models.CharField(max_length=40)
