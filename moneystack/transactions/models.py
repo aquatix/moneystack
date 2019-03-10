@@ -6,6 +6,8 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
+from taggit.managers import TaggableManager
+
 from .choices import *
 
 
@@ -128,7 +130,7 @@ class PaymentParty(BaseModel):
     #lebenstein distance thingee?
     #regexp?
     category = models.IntegerField(choices=PAYMENTPARTY_CATEGORIES, default=PAYMENTPARTY_CATEGORIES[0])
-    #tags = 
+    tags = TaggableManager()
 
 
 class PaymentPartyInstance(BaseModel):
