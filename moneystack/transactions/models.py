@@ -96,7 +96,8 @@ class Transaction(BaseModel):
     # withdrawal or deposit, True or False
     withdrawal = models.BooleanField(default=True)
     amount = models.DecimalField(decimal_places=2, max_digits=10)
-    mutation_kind = models.CharField(max_length=255, blank=True)
+    mutation_kind_code = models.CharField(max_length=255, blank=True)
+    mutation_kind = models.IntegerField(choices=MUTATION_TYPES, default=0)
     notes = models.TextField(blank=True)
 
     # 'betalingskenmerk', parsed from notes. Minimum of 7 digits, max of 16
