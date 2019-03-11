@@ -1,3 +1,9 @@
 -r requirements.in
 
 pylint-django
+
+# Security scanner
+bandit
+
+# pylint reporting
+pylint-json2html
