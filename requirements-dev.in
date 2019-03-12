@@ -1,5 +1,6 @@
 -r requirements.in
 
+flake8
 pylint-django
 
 # Security scanner
