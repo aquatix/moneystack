@@ -1,29 +1,21 @@
-"""
-Django admin stuff for moneystack
-"""
+"""Django admin stuff for moneystack"""
 from django.contrib import admin
 
 from .models import Account, Project, Transaction
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    """
-    Edit projects
-    """
+    """Edit projects"""
     list_display = ('title',)
 
 
 class AccountAdmin(admin.ModelAdmin):
-    """
-    Edit accounts
-    """
+    """Edit accounts"""
     list_display = ('title',)
 
 
 class TransactionAdmin(admin.ModelAdmin):
-    """
-    Edit transactions
-    """
+    """ Edit transactions"""
     list_display = ('date', 'account', 'otheraccount', 'code', 'amount', 'payment_reference',)
 
 

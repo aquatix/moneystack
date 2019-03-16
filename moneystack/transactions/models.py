@@ -35,7 +35,9 @@ class BaseModel(models.Model):
 
 class Project(BaseModel):
     """Account that can be shared by multiple users. Can contain multiple banking accounts."""
+    #: Free form name of this project
     title = models.CharField(max_length=255, blank=False)
+    #: The users that share this project
     users = models.ManyToManyField(User)
 
     def __repr__(self):
@@ -52,7 +54,8 @@ class Account(BaseModel):
     accountcode = models.CharField(max_length=40, blank=False,\
             help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
 
-    secure_code = models.CharField(max_length=100, blank=False)  # Used for storing (temporary) files and such
+    #: Used for storing (temporary) files and such
+    secure_code = models.CharField(max_length=100, blank=False)
 
     def __init__(self):
         super().__init__()
@@ -95,14 +98,14 @@ class Transaction(BaseModel):
     account = models.ForeignKey(Account, related_name='transactions', on_delete=models.CASCADE)
     otheraccount = models.CharField(max_length=40, blank=True)
     code = models.CharField(max_length=255, blank=True)
-    # withdrawal or deposit, True or False
+    #: withdrawal or deposit, True or False
     withdrawal = models.BooleanField(default=True)
     amount = models.DecimalField(decimal_places=2, max_digits=10)
     mutation_kind_code = models.CharField(max_length=255, blank=True)
     mutation_kind = models.IntegerField(choices=MUTATION_TYPES, default=0)
     notes = models.TextField(blank=True)
 
-    # 'betalingskenmerk', parsed from notes. Minimum of 7 digits, max of 16
+    #: 'betalingskenmerk', parsed from notes. Minimum of 7 digits, max of 16
     payment_reference = models.TextField(max_length=20, blank=True)
 
     def __repr__(self):
