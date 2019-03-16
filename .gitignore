@@ -56,3 +56,4 @@ target/
 # Project
 *.swp
 tags
+*.sqlite3
