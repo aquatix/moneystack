@@ -1,14 +1,13 @@
 """Models of moneystack project"""
 import binascii
 import os
-from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
-
 from taggit.managers import TaggableManager
 
-from .choices import *
+from .choices import (MUTATION_FILE_TYPES, MUTATION_TYPES,
+                      PAYMENTPARTY_CATEGORIES)
 
 
 def generate_key():
@@ -51,8 +50,11 @@ class Account(BaseModel):
     """Banking account"""
     project = models.ForeignKey(Project, related_name='account', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=False)
-    accountcode = models.CharField(max_length=40, blank=False,\
-            help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc')
+    accountcode = models.CharField(
+        max_length=40,
+        blank=False,
+        help_text='Account number, like an IBAN code: NLkk bbbb cccc cccc cc'
+    )
 
     #: Used for storing (temporary) files and such
     secure_code = models.CharField(max_length=100, blank=False)
