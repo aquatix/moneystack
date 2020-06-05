@@ -6,11 +6,11 @@
 #
 asgiref==3.2.3            # via django
 astroid==2.3.3            # via pylint
-bandit==1.6.2
-django-taggit==1.2.0
-django==3.0.3
+bandit==1.6.2             # via -r requirements-dev.in
+django-taggit==1.2.0      # via -r requirements.in
+django==3.0.7             # via -r requirements.in, django-taggit
 entrypoints==0.3          # via flake8
-flake8==3.7.9
+flake8==3.7.9             # via -r requirements-dev.in
 gitdb2==3.0.2             # via gitpython
 gitpython==3.0.8          # via bandit
 isort==4.3.21             # via pylint
@@ -21,8 +21,8 @@ mccabe==0.6.1             # via flake8, pylint
 pbr==5.4.4                # via stevedore
 pycodestyle==2.5.0        # via flake8
 pyflakes==2.1.1           # via flake8
-pylint-django==2.0.13
-pylint-json2html==0.2.0
+pylint-django==2.0.13     # via -r requirements-dev.in
+pylint-json2html==0.2.0   # via -r requirements-dev.in
 pylint-plugin-utils==0.6  # via pylint-django
 pylint==2.4.4             # via pylint-django, pylint-json2html, pylint-plugin-utils
 pytz==2019.3              # via django
@@ -31,5 +31,4 @@ six==1.14.0               # via astroid, bandit, stevedore
 smmap2==2.0.5             # via gitdb2
 sqlparse==0.3.0           # via django
 stevedore==1.32.0         # via bandit
-typed-ast==1.4.1          # via astroid
 wrapt==1.11.2             # via astroid
