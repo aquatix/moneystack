@@ -14,5 +14,5 @@ django==3.2
     #   django-taggit
 pytz==2021.1
     # via django
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
