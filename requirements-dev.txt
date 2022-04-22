@@ -10,7 +10,7 @@ astroid==2.9.2
     # via pylint
 bandit==1.7.1
     # via -r requirements-dev.in
-django==4.0.1
+django==4.0.4
     # via
     #   -r requirements.in
     #   django-taggit
@@ -63,11 +63,6 @@ stevedore==3.5.0
     # via bandit
 toml==0.10.2
     # via pylint
-typing-extensions==4.0.1
-    # via
-    #   astroid
-    #   gitpython
-    #   pylint
 wrapt==1.13.3
     # via astroid
 
